@@ -116,14 +116,33 @@
         "publicClient": true,
         "redirectUris": ["http://localhost:3000/*"],
         "webOrigins": ["http://localhost:3000"],
-        "directAccessGrantsEnabled": true
+        "standardFlowEnabled": true,
+        "directAccessGrantsEnabled": false,
+        "attributes": {
+          "pkce.code.challenge.method": "S256"
+        }
       },
       {
         "clientId": "reports-api",
         "enabled": true,
         "clientAuthenticatorType": "client-secret",
         "secret": "oNwoLQdvJAvRcL89SydqCWCe5ry1jMgq", 
-        "bearerOnly": true
+        "bearerOnly": false,
+        "protocolMappers": [
+          {
+            "name": "realm_roles",
+            "protocol": "openid-connect",
+            "protocolMapper": "oidc-usermodel-realm-role-mapper",
+            "config": {
+              "multivalued": "true",
+              "userinfo.token.claim": "true",
+              "id.token.claim": "true",
+              "access.token.claim": "true",
+              "claim.name": "realm_access.roles",
+              "jsonType.label": "String"
+            }
+          }
+        ]
       }
     ]
   }
